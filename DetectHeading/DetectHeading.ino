@@ -56,7 +56,7 @@ void printOrientation()
 {
    double eulerAngles[3];
    quaternion::toEulerAngles(orien, eulerAngles);
-   quaternion::printEuler2Serial(eulerAngles);
+   quaternion::printEuler2Serial(&SERIAL_PORT, eulerAngles);
 }
 
 void setup() 

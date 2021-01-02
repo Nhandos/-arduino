@@ -21,8 +21,8 @@ namespace quaternion{
     Quaternion euler2quat(double yaw, double pitch, double roll);
     void toEulerAngles(Quaternion q, double *angles);
     Quaternion fromAxisAngle(double angle, double axis3D[]);
-    void printQuat2Serial(Quaternion q);
-    void printEuler2Serial(double* eulerAnlges);
+    void printQuat2Serial(HardwareSerial *port, Quaternion q);
+    void printEuler2Serial(HardwareSerial *port, double* eulerAnlges);
 }
 
 #endif

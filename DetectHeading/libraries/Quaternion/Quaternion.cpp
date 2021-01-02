@@ -1,6 +1,6 @@
 #include "Quaternion.h"
 
-static void printFormattedFloat(float val, uint8_t leading, uint8_t decimals);
+static void printFormattedFloat(HardwareSerial *port, float val, uint8_t leading, uint8_t decimals);
 
 double deg2rad( double degrees )
 {
@@ -134,40 +134,40 @@ namespace quaternion {
         angles[2] = atan2(siny_cosp, cosy_cosp);
     }
 
-    void printQuat2Serial(Quaternion q)
+    void printQuat2Serial(HardwareSerial *port, Quaternion q)
     { 
-        Serial.print("[ ");
-        printFormattedFloat(q.a, 3, 2);
-        Serial.print(", ");
-        printFormattedFloat(q.b, 3, 2);
-        Serial.print(", ");
-        printFormattedFloat(q.c, 3, 2);
-        Serial.print(", ");
-        printFormattedFloat(q.d, 3, 2);
-        Serial.println(" ]");
+        port->print("[ ");
+        printFormattedFloat(port, q.a, 3, 2);
+        port->print(", ");
+        printFormattedFloat(port, q.b, 3, 2);
+        port->print(", ");
+        printFormattedFloat(port, q.c, 3, 2);
+        port->print(", ");
+        printFormattedFloat(port, q.d, 3, 2);
+        port->println(" ]");
     }
 
-    void printEuler2Serial(double* eulerAngles)
+    void printEuler2Serial(HardwareSerial* port, double* eulerAngles)
     {
-        Serial.print("[ Roll: ");
-        printFormattedFloat(rad2deg(eulerAngles[0]), 3, 2);
-        Serial.print(", Pitch: ");
-        printFormattedFloat(rad2deg(eulerAngles[1]), 3, 2);
-        Serial.print(", Yaw: ");
-        printFormattedFloat(rad2deg(eulerAngles[2]), 3, 2);
-        Serial.println(" ]");
+        port->print("[ Roll: ");
+        printFormattedFloat(port, rad2deg(eulerAngles[0]), 3, 2);
+        port->print(", Pitch: ");
+        printFormattedFloat(port, rad2deg(eulerAngles[1]), 3, 2);
+        port->print(", Yaw: ");
+        printFormattedFloat(port, rad2deg(eulerAngles[2]), 3, 2);
+        port->println(" ]");
 
     }
 
 
 } // namespace quaternion
 
-static void printFormattedFloat(float val, uint8_t leading, uint8_t decimals){
+static void printFormattedFloat(HardwareSerial *port, float val, uint8_t leading, uint8_t decimals){
   float aval = abs(val);
   if(val < 0){
-    Serial.print("-");
+    port->print("-");
   }else{
-    Serial.print(" ");
+    port->print(" ");
   }
   for( uint8_t indi = 0; indi < leading; indi++ ){
     uint32_t tenpow = 0;
@@ -178,15 +178,15 @@ static void printFormattedFloat(float val, uint8_t leading, uint8_t decimals){
       tenpow *= 10;
     }
     if( aval < tenpow){
-      Serial.print("0");
+      port->print("0");
     }else{
       break;
     }
   }
   if(val < 0){
-    Serial.print(-val, decimals);
+    port->print(-val, decimals);
   }else{
-    Serial.print(val, decimals);
+    port->print(val, decimals);
   }
 }
 
