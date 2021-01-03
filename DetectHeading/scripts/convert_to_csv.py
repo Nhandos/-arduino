@@ -28,8 +28,9 @@ def main(argv):
         writer = csv.DictWriter(csvfile, fieldnames=FIELD_NAMES)
         writer.writeheader()
         for line in serialfile:
-            m = re.findall(PATTERN, line)
+            m = re.findall(PATTERN, line) 
             if m:
+                assert len(m) == 10, "Invalid input file - line: %d" % (len(m))
                 writer.writerow({k: v for k, v in zip(FIELD_NAMES, m)})
 
 
